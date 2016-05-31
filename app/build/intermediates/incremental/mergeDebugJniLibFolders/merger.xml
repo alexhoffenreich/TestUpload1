@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="C:\Users\ADSL\AndroidStudioProjects\TestGithub 1\app\src\main\jniLibs"><file name="armeabi/libDVL.so" path="C:\Users\ADSL\AndroidStudioProjects\TestGithub 1\app\src\main\jniLibs\armeabi\libDVL.so"/><file name="armeabi-v7a/libDVL.so" path="C:\Users\ADSL\AndroidStudioProjects\TestGithub 1\app\src\main\jniLibs\armeabi-v7a\libDVL.so"/></source></dataSet><dataSet config="debug"><source path="C:\Users\ADSL\AndroidStudioProjects\TestGithub 1\app\src\debug\jniLibs"/></dataSet></merger>
