@@ -1,13 +1,21 @@
 package com.example.Example2;
 
-import com.sap.ve.*;
-import com.sap.ve.DVLTypes.*;
-import com.example.Example2.GestureHandler;
-
+import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.os.Environment;
-import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
+
+
+import com.DVL.DVL;
+import com.sap.ve.DVLClient;
+import com.sap.ve.DVLCore;
+import com.sap.ve.DVLRenderer;
+import com.sap.ve.DVLScene;
+import com.sap.ve.DVLTypes.DVLRENDEROPTION;
+import com.sap.ve.DVLTypes.DVLRENDEROPTIONF;
+import com.sap.ve.DVLTypes.DVLRESULT;
+import com.sap.ve.SDVLMatrix;
 
 import javax.microedition.khronos.egl.EGL10;
 import javax.microedition.khronos.egl.EGLConfig;
@@ -19,6 +27,34 @@ public class Surface extends GLSurfaceView
 {
 	private DVLCore m_core;
 	private GestureHandler m_gestures;
+	private CustomRenderer custom_renderder;
+
+	public Surface(Context context) {
+		super(context);
+		init();
+	}
+
+	public Surface(Context context, AttributeSet attrs) {
+		super(context, attrs);
+		init();
+	}
+
+	public CustomRenderer getCustomRenderder(){
+		return custom_renderder;
+	}
+
+	void init() {
+		m_core = ((MainActivity) getContext()).getCore();
+		m_gestures = new GestureHandler();
+
+		setEGLContextFactory(new ContextFactory());
+		setEGLConfigChooser(new ConfigChooser());
+		custom_renderder = new CustomRenderer(getContext(), m_core, m_gestures);
+		setRenderer(custom_renderder);
+		setOnTouchListener(m_gestures);
+
+
+	}
 
 	private static class ConfigChooser implements GLSurfaceView.EGLConfigChooser
 	{
@@ -32,6 +68,7 @@ public class Surface extends GLSurfaceView
 			EGL10.EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT,
 			EGL10.EGL_NONE
 			};
+		private int[] mValue = new int[1];
 
 		public EGLConfig chooseConfig(EGL10 egl, EGLDisplay display)
 		{
@@ -85,35 +122,8 @@ public class Surface extends GLSurfaceView
 
 			return defaultValue;
 		}
-
-		private int[] mValue = new int[1];
-	}
-
-	void init()
-	{
-		m_core = ((MainActivity) getContext()).getCore();
-		m_gestures = new GestureHandler();
-
-		setEGLContextFactory(new ContextFactory());
-		setEGLConfigChooser(new ConfigChooser());
-		setRenderer(new CustomRenderer(getContext(), m_core, m_gestures));
-
-		setOnTouchListener(m_gestures);
-	}
-
-	public Surface(Context context)
-	{
-		super(context);
-		init();
-	}
-
-	public Surface(Context context, AttributeSet attrs)
-	{
-		super(context, attrs);
-		init();
 	}
 }
-
 
 
 class CustomRenderer implements GLSurfaceView.Renderer
@@ -121,10 +131,14 @@ class CustomRenderer implements GLSurfaceView.Renderer
 	private DVLCore m_core;
 	private DVLRenderer m_renderer;
 	private DVLScene m_scene;
-	private SDVLProceduresInfo m_proceduresInfo;
-	private SDVLPartsListInfo m_partsListInfo;
+	//private SDVLProceduresInfo m_proceduresInfo;
+	//private SDVLPartsListInfo m_partsListInfo;
 	private GestureHandler m_gestures;
 	private Context m_context;
+
+	/*public SDVLPartsListInfo getPartsListInfo() {
+		return m_partsListInfo;
+	}*/
 
 	public CustomRenderer(Context context, DVLCore core, GestureHandler gestures)
 	{
@@ -140,25 +154,32 @@ class CustomRenderer implements GLSurfaceView.Renderer
 			return;
 
 		m_renderer = m_core.GetRenderer();
+
 		m_renderer.SetBackgroundColor(50.0f / 255.0f, 50.0f / 255.0f, 50.0f / 255.0f, 1.0f, 1.0f, 1.0f);
-		m_renderer.SetOption(DVLRENDEROPTION.SHOW_DEBUG_INFO, true);
-		m_renderer.SetOption(DVLRENDEROPTION.HALF_RESOLUTION, true);
+		m_renderer.SetOption(DVLRENDEROPTION.SHOW_DEBUG_INFO, false);
+		m_renderer.SetOptionF(DVLRENDEROPTIONF.DYNAMIC_LOADING_THRESHOLD, 0.0f);
+		m_renderer.SetOption(DVLRENDEROPTION.AMBIENT_OCCLUSION,false);
+		m_renderer.SetOption(DVLRENDEROPTION.HALF_RESOLUTION,true);
+		//m_renderer.SetOption(DVLRENDEROPTION.SHOW_BACKFACING,true);
+		m_renderer.SetOptionF(DVLRENDEROPTIONF.VIDEO_MEMORY_SIZE,1024.0f);
 
 		m_scene = new DVLScene(0, m_context);
-		res = m_core.LoadScene("file://" + Environment.getExternalStorageDirectory().getAbsolutePath() + "/VDS/file1.vds", null, m_scene);
-		if (res.Failed())
+		res = m_core.LoadScene("file://" + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/RFRL-Test 2.vds", null, m_scene);
+		if (res.Failed()){
+			Log.e("VDS","Failed to load ");
 			return;
+		} else {
+			Log.i("VDS","Loaded Successfully !!!!!");
+		}
 
 		m_renderer.AttachScene(m_scene);
 
-		m_proceduresInfo = new SDVLProceduresInfo();
-		m_scene.RetrieveProcedures(m_proceduresInfo);
-		//m_scene.ActivateStep(m_proceduresInfo.portfolios.get(0).steps.get(0).id, true, true);
+		DVLClient.setContext(m_context);
+		DVL.getInstance().init(m_core);
 
-		m_partsListInfo = new SDVLPartsListInfo();
-		m_scene.BuildPartsList(DVLPARTSLIST.RECOMMENDED_uMaxParts, DVLPARTSLIST.RECOMMENDED_uMaxNodesInSinglePart, DVLPARTSLIST.RECOMMENDED_uMaxPartNameLength,
-				DVLPARTSLISTTYPE.ALL, DVLPARTSLISTSORT.NAME_ASCENDING, DVLTypes.DVLID_INVALID, "", m_partsListInfo);
 	}
+
+
 
 	public void onSurfaceChanged(GL10 gl, int w, int h)
 	{
@@ -172,14 +193,13 @@ class CustomRenderer implements GLSurfaceView.Renderer
 		SDVLMatrix matView = new SDVLMatrix();
 		SDVLMatrix matProj = new SDVLMatrix();
 		m_renderer.GetCameraMatrices(matView, matProj);
-
 		m_renderer.RenderFrame();
 	}
+
 }
 
 
-
-class ContextFactory implements GLSurfaceView.EGLContextFactory 
+class ContextFactory implements GLSurfaceView.EGLContextFactory
 {
 	private static int EGL_CONTEXT_CLIENT_VERSION = 0x3098;
 
@@ -195,3 +215,4 @@ class ContextFactory implements GLSurfaceView.EGLContextFactory
 		egl.eglDestroyContext(display, context);
 	}
 }
+

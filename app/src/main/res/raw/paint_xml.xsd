@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema
+    elementFormDefault="qualified"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+
+  <xs:element name="PAINT_LIST">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="PAINT" minOccurs="0" maxOccurs="unbounded">
+          <xs:annotation>
+            <xs:documentation>
+              A set of paint instructions for a paint rule and the set of nodes that had data matching the paint rule.
+              SAP_PAINT handles assembly painting taking assembly filtering into account, so these instructions do not represent the final result of the painting operation.
+            </xs:documentation>
+          </xs:annotation>
+          
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="NODE" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                  <xs:documentation>A node that matched the paint rule (before applying assembly level filtering).</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:attribute name="ID" type="xs:string" use="required">
+                    <xs:annotation>
+                      <xs:documentation>The name of the node.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            
+            <xs:attribute name="COLOR" type="xs:string" use="optional">
+              <xs:annotation>
+                <xs:documentation>
+                  The highlight color to apply to affected nodes in HTML hex format: #RRGGBB
+                  If not present, the highlight color at time of scene load is used (if any).
+                  If not present and no highlight was applied at the time of scene load, the paint operation will remove any highlight from the affected nodes.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            
+            <xs:attribute name="OPACITY" type="xs:double" use="optional">
+              <xs:annotation>
+                <xs:documentation>
+                  The opacity to apply to affected nodes range [0.0 - 1.0].
+                  If not present, the opacity at time of scene load is used.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            
+            <xs:attribute name="VISIBLE" type="xs:boolean" use="optional">
+              <xs:annotation>
+                <xs:documentation>
+                  The visibility status to apply to affected nodes.
+                  If not present, the visibility status at time of scene load is used.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            
+            <xs:attribute name="RENDER_ORDER" type="xs:int" use="optional">
+              <xs:annotation>
+                <xs:documentation>
+                  The render order to apply to affected nodes.
+                  If not present, the render order at time of scene load is used.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+
+            <xs:attribute name="ALLOW_OVERRIDE" type="xs:boolean" use="optional">
+              <xs:annotation>
+                <xs:documentation>
+                  Set to true to indicate that matching should be allowed on descendent nodes.
+                  This is normally used for the paint rule(s) for filtered and unmatched nodes.
+                </xs:documentation>
+              </xs:annotation>  
+            </xs:attribute>
+            
+            <xs:attribute name="USE_FOR_FILTERED_NODES" type="xs:boolean" use="optional">
+              <xs:annotation>
+                <xs:documentation>
+                  Set to true if this is the paint rule for nodes filtered by assembly level filtering.
+                  
+                  The Dashboards Add-On uses one paint rule for nodes filtered by assembly level filtering and nodes that did not match any paint rule.
+                  Using separate paint rules is an untested scenario.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            
+            <xs:attribute name="DEFAULT" type="xs:boolean" use="optional">
+              <xs:annotation>
+                <xs:documentation>
+                  Set to true if this is the paint rule for nodes that did not match any paint rule.
+
+                  The Dashboards Add-On uses one paint rule for nodes filtered by assembly level filtering and nodes that did not match any paint rule.
+                  Using separate paint rules is an untested scenario.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="ASSEMBLY_PAINTING_ENABLED" type="xs:boolean" use="optional" default="false">
+        <xs:annotation>
+          <xs:documentation>Set to true to enable assembly painting.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="ASSEMBLY_LEVEL" type="xs:int" use="optional" default="-1">
+        <xs:annotation>
+          <xs:documentation>The assembly level filtering level. Assembly level filtering is disabled if this has the value -1.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

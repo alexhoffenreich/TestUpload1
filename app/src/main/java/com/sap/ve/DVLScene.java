@@ -9,18 +9,23 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.WindowManager;
 
-import com.sap.ve.DVLTypes.*;
-
-import java.lang.Object;
-import java.util.ArrayList;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
+import com.sap.ve.DVLTypes.DVLEXECUTE;
+import com.sap.ve.DVLTypes.DVLFINDNODEMODE;
+import com.sap.ve.DVLTypes.DVLFINDNODETYPE;
+import com.sap.ve.DVLTypes.DVLPARTSLISTSORT;
+import com.sap.ve.DVLTypes.DVLPARTSLISTTYPE;
+import com.sap.ve.DVLTypes.DVLRESULT;
+import com.sap.ve.DVLTypes.DVLSCENEACTION;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
+
+import java.util.ArrayList;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 public class DVLScene
 {
@@ -67,7 +72,7 @@ public class DVLScene
 	}
 
 	public DVLRESULT BuildPartsList(int maxParts, int maxNodesInSinglePart, int maxPartNameLength,
-			DVLPARTSLISTTYPE type, DVLPARTSLISTSORT sort, long idConsumedStep, java.lang.String substring, SDVLPartsListInfo info)
+									DVLPARTSLISTTYPE type, DVLPARTSLISTSORT sort, long idConsumedStep, java.lang.String substring, SDVLPartsListInfo info)
 	{
 		return DVLRESULT.fromInt( nativeBuildPartsList(m_handle, maxParts, maxNodesInSinglePart, maxPartNameLength,
 				type.ordinal(), sort.ordinal(), idConsumedStep, substring, info) );
@@ -115,12 +120,12 @@ public class DVLScene
 
 	public DVLRESULT SetNodeOpacity(long nodeId, float opacity)
 	{
-		return DVLRESULT.fromInt( nativeSetNodeOpacity(m_handle, nodeId, opacity) );		
+		return DVLRESULT.fromInt( nativeSetNodeOpacity(m_handle, nodeId, opacity) );
 	}
 
 	public DVLRESULT SetNodeHighlightColor(long nodeId, int color)
 	{
-		return DVLRESULT.fromInt( nativeSetNodeHighlightColor(m_handle, nodeId, color) );		
+		return DVLRESULT.fromInt( nativeSetNodeHighlightColor(m_handle, nodeId, color) );
 	}
 
 	public DVLRESULT GetNodeWorldMatrix(long nodeId, SDVLMatrix mat)
@@ -130,7 +135,7 @@ public class DVLScene
 
 	public DVLRESULT SetNodeWorldMatrix(long nodeId, SDVLMatrix mat)
 	{
-		return DVLRESULT.fromInt( nativeSetNodeWorldMatrix(m_handle, nodeId, mat) );		
+		return DVLRESULT.fromInt( nativeSetNodeWorldMatrix(m_handle, nodeId, mat) );
 	}
 
 	public DVLRESULT Execute(DVLEXECUTE type, String str)
@@ -233,7 +238,7 @@ public class DVLScene
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 //			factory.setNamespaceAware(true);
 //			final SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-//			factory.setValidating(true);  
+//			factory.setValidating(true);
 //			final Schema schema = sf.newSchema(new StreamSource(getClass().getResourceAsStream(SCHEMA_PATH)));
 //			factory.setSchema(schema);
 

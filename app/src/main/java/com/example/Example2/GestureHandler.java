@@ -3,51 +3,21 @@ package com.example.Example2;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
-import java.util.concurrent.ConcurrentLinkedQueue;
-import java.lang.Math;
 
-public class GestureHandler implements OnTouchListener 
+import java.util.concurrent.ConcurrentLinkedQueue;
+
+public class GestureHandler implements OnTouchListener
 {
-	static final class Event
-	{
-		public int event;
-		public int pointerCount;
-		public int actionIndex;
-		public float x1, y1;
-		public float x2, y2;
-		
-		Event(MotionEvent e)
-		{
-			event = e.getActionMasked();
-			x1 = e.getX();
-			y1 = e.getY();
-			pointerCount = e.getPointerCount();
-			actionIndex = e.getActionIndex();
-			if (pointerCount > 1)
-			{
-				MotionEvent.PointerCoords pc = new MotionEvent.PointerCoords();
-				e.getPointerCoords(1, pc);
-				x2 = pc.x;
-				y2 = pc.y;
-			}
-			else
-			{
-				x2 = 0.f;
-				y2 = 0.f;
-			}
-		}
-	}
-	
+
 	ConcurrentLinkedQueue<Event> m_events;
 	int m_iPointer;
 	float m_posX1, m_posY1;
 	float m_posX2, m_posY2;
 	boolean m_bGesture;
-	
 	public GestureHandler()
 	{
 		m_events = new ConcurrentLinkedQueue<Event>();
-		
+
 		m_iPointer = 0;
 		m_bGesture = false;
 	}
@@ -67,7 +37,7 @@ public class GestureHandler implements OnTouchListener
 
 		return false;
 	}
-	
+
 	public void update(com.sap.ve.DVLRenderer renderer)
 	{
 		while (true)
@@ -188,6 +158,31 @@ public class GestureHandler implements OnTouchListener
 					m_iPointer &= ~1;
 				}
 				break;
+			}
+		}
+	}
+
+	static final class Event {
+		public int event;
+		public int pointerCount;
+		public int actionIndex;
+		public float x1, y1;
+		public float x2, y2;
+
+		Event(MotionEvent e) {
+			event = e.getActionMasked();
+			x1 = e.getX();
+			y1 = e.getY();
+			pointerCount = e.getPointerCount();
+			actionIndex = e.getActionIndex();
+			if (pointerCount > 1) {
+				MotionEvent.PointerCoords pc = new MotionEvent.PointerCoords();
+				e.getPointerCoords(1, pc);
+				x2 = pc.x;
+				y2 = pc.y;
+			} else {
+				x2 = 0.f;
+				y2 = 0.f;
 			}
 		}
 	}

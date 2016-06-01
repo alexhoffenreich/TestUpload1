@@ -14,11 +14,14 @@ public class DVLCore
 	private long m_handle = 0;
 	private Context m_context;
 	private DVLRenderer m_renderer;
-	private DVLLibrary	m_library;
+	private DVLLibrary m_library;
+	private DVLClient m_client;
 
 	public DVLCore(Context context)
-	{ 
+	{
+		//m_client = new DVLClient(this);
 		m_context = context;
+		//m_handle = nativeInit(m_client);
 		m_handle = nativeInit();
 		if (m_handle == 0)
 			throw new java.lang.UnsupportedOperationException("can't instantiate core");
@@ -26,16 +29,38 @@ public class DVLCore
 		m_library = new DVLLibrary( nativeGetLibrary(m_handle) );
 	}
 
-	public DVLLibrary GetLibrary()
-	{
+	//static private native long nativeInit(DVLClient client);
+	static private native long nativeInit();
+
+	static private native void nativeDone(long handle);
+
+	static private native long nativeGetLibrary(long handle);
+
+	static private native int nativeInitRenderer(long handle);
+
+	static private native int nativeDoneRenderer(long handle);
+
+	static private native long nativeGetRenderer(long handle);
+
+	static private native int nativeGetMajorVersion(long handle);
+
+	static private native int nativeGetMinorVersion(long handle);
+
+	// system stuff
+
+	static private native int nativeGetBuildNumber(long handle);
+
+	static private native int nativeLoadScene(long handle, String filename, String password, Object scene);
+
+	// native stuff
+
+	public DVLLibrary GetLibrary() {
 		return m_library;
 	}
 
-	public DVLRESULT InitRenderer()
-	{
+	public DVLRESULT InitRenderer() {
 		DVLRESULT res = DVLRESULT.fromInt(nativeInitRenderer(m_handle));
-		if (res.Failed())
-		{
+		if (res.Failed()) {
 			android.util.Log.w("DVLCore", "InitRenderer failed: " + res.toString());
 			return res;
 		}
@@ -48,80 +73,55 @@ public class DVLCore
 		return res;
 	}
 
-	public DVLRESULT DoneRenderer()
-	{
-		return DVLRESULT.fromInt( nativeDoneRenderer(m_handle) );
+	public DVLRESULT DoneRenderer() {
+		return DVLRESULT.fromInt(nativeDoneRenderer(m_handle));
 	}
 
-	public DVLRenderer GetRenderer()
-	{
+	public DVLRenderer GetRenderer() {
 		return m_renderer;
 	}
 
-	public int GetMajorVersion()
-	{
+	public int GetMajorVersion() {
 		return nativeGetMajorVersion(m_handle);
 	}
 
-	public int GetMinorVersion()
-	{
+	public int GetMinorVersion() {
 		return nativeGetMinorVersion(m_handle);
 	}
 
-	public int GetBuildNumber()
-	{
+	public int GetBuildNumber() {
 		return nativeGetBuildNumber(m_handle);
 	}
 
-	public DVLRESULT LoadScene(String filename, String password, DVLScene scene)
-	{
+	public DVLRESULT LoadScene(String filename, String password, DVLScene scene) {
 		DVLClient.startLoading();
-		return DVLRESULT.fromInt( nativeLoadScene(m_handle, filename, password, scene) );
+		return DVLRESULT.fromInt(nativeLoadScene(m_handle, filename, password, scene));
 	}
 
-	// system stuff
-
-	public void dispose()
-	{
-		if (m_renderer != null)
-		{
+	public void dispose() {
+		if (m_renderer != null) {
 			m_renderer.dispose();
 			m_renderer = null;
 		}
 
 		m_library = null;
-		
-		if (m_handle != 0)
-		{
+
+		if (m_handle != 0) {
 			nativeDone(m_handle);
 			m_handle = 0;
 		}
 	}
 
 	@Override
-	protected void finalize() throws Throwable
-	{
+	protected void finalize() throws Throwable {
 		try {
-			dispose();			
+			dispose();
 		} finally {
 			super.finalize();
 		}
 	}
 
-	// native stuff
-
-	static private native long nativeInit();
-	static private native void nativeDone(long handle);
-
-	static private native long nativeGetLibrary(long handle);
-
-	static private native int nativeInitRenderer(long handle);
-	static private native int nativeDoneRenderer(long handle);
-	static private native long nativeGetRenderer(long handle);
-
-	static private native int nativeGetMajorVersion(long handle);
-	static private native int nativeGetMinorVersion(long handle);
-	static private native int nativeGetBuildNumber(long handle);
-
-	static private native int nativeLoadScene(long handle, String filename, String password, Object scene);
+	public Context getContext() {
+		return m_context;
+	}
 }

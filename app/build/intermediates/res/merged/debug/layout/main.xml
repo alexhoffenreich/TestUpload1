@@ -1,11 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+
     >
 
-	<com.example.Example2.Surface android:layout_width="fill_parent" android:layout_height="fill_parent"/>
 
-</LinearLayout>
+        <com.example.Example2.Surface
+            android:id="@+id/dvl_surface"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+             />
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/buttons_layout"
+        android:orientation="horizontal"
+        >
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/buttons_layout"
+        android:id="@+id/fixed_buttons"
+        android:orientation="horizontal"
+        >
+
+        <Button
+            android:id="@+id/show_all_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reset" />
+
+    </LinearLayout>
+</RelativeLayout>
 

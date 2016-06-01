@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<procedures>
+    <procedure id="mclu_removal">
+        <title>MCLU Removal</title>
+        <steps>
+            <step id="1">
+                <text>Open Launcher Drawer.</text>
+                <operations>
+                    <zoom isolate="true" viewport="RTF">
+                        <part name="launcher drawer" />
+                    </zoom>
+                    <hide>
+                        <part name="CablesChain" />
+                    </hide>
+
+                </operations>
+            </step>
+            <step id="2">
+                <text>Remove connectors</text>
+                <operations>
+                    <remove dir="left">
+                        <part name="mclu_j1" />
+                        <part name="mclu_j2" />
+                        <part name="mclu_j3" />
+                        <part name="mclu_j4" />
+                        <part name="mclu_j5" />
+                    </remove>
+                </operations>
+            </step>
+            <step id="3">
+                <text>Remove 4 screws and washers.</text>
+                <operations>
+                    <opacity value="50">
+                        <part name="mclu"/>
+                    </opacity>
+                    <remove dir="up">
+                        <part name="mclu_screw" />
+                    </remove>
+                    <remove dir="up">
+                        <part name="mclu_washer" />
+                    </remove>
+                    <opacity value="100">
+                        <part name="mclu"/>
+                    </opacity>
+                </operations>
+            </step>
+            <step id="4">
+                <text>Remove the MCLU.</text>
+                <operations>
+                    <remove dir="up">
+                        <part name="mclu" />
+                    </remove>
+                </operations>
+            </step>
+        </steps>
+    </procedure>
+
+</procedures>

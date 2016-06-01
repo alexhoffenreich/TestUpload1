@@ -210,8 +210,8 @@ public class DVLRenderer
 	static private native int nativeSetAuxiliarySceneMatrix(long hRenderer, int index, Object matWorld);
 	static private native boolean nativeShouldRenderFrame(long hRenderer);
 	static private native int nativeRenderFrame(long hRenderer);
-	static private native int nativeRenderFrameEx(long hRenderer, Object matView, Object  matProjection);
-	static private native int nativeGetCameraMatrices(long hRenderer, Object matView, Object  matProjection);
+	static private native int nativeRenderFrameEx(long hRenderer, Object matView, Object matProjection);
+	static private native int nativeGetCameraMatrices(long hRenderer, Object matView, Object matProjection);
 	static private native int nativeSetOption(long hRenderer, int type, boolean bEnable);
 	static private native boolean nativeGetOption(long hRenderer, int type);
 	static private native int nativeSetOptionF(long hRenderer, int type, float fValue);

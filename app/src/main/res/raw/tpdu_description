@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<main>
+    <section name="description">
+        <h1>Trolley Power Distribution Unit – TPDU</h1>
+        <p>This section describes the following topics:</p>
+        <ul>
+            <li>Location of the TPDU</li>
+            <li>External structure of the TPDU</li>
+            <li>Internal structure of the TPDU</li>
+        </ul>
+        <h2>Purpose of the TPDU</h2>
+        <p>The TPDU performs the following tasks:</p>
+        <ul>
+            <li>Receives 230VAC supply from the generator or mains supply and transfers it to the PSC.
+            </li>
+
+            <li>Receives 28V DC from the PSC for distribution to trolley components.</li>
+
+            <li>In case of generator or mains power failure, receives 21-24VDC from the battery pack for
+                distribution to trolley components.
+            </li>
+        </ul>
+        <h2>Location of the TPDU</h2>
+
+        <p>The TPDU is located in the Power Supply and Distribution Compartment at the forward left hand
+            side of the trolley.
+        </p>
+
+        <h2>External Structure of the TPDU</h2>
+
+        <p>The TPDU includes a front panel and rear panel.</p>
+        <h3>Front Panel of the TPDU</h3>
+        <p>The front panel of the TPDU includes the following sections:</p>
+        <li>• TPDU POWER USAGE (1)</li>
+
+        <li>• 230V AC LOADS switches (shown as 220) (2)</li>
+
+        <li>• CONTROL Panel (3)</li>
+
+        <li>• 28V DC LOADS switches (shown as 24) (4)</li>
+
+        <li>• POWER STATUS (5)</li>
+
+        <li>• Power sockets + emergency push button (6)</li>
+    </section>
+    <section name="removal_installation">
+
+    </section>
+
+
+</main>

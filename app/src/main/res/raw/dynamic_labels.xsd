@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:tns="http://schemas.sap.com/VE/Viewer/DynamicLabels/2014/August" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    attributeFormDefault="unqualified"
+    elementFormDefault="qualified"
+    targetNamespace="http://schemas.sap.com/VE/Viewer/DynamicLabels/2014/August">
+
+    <xs:simpleType name="colorType">
+        <xs:restriction base="xs:hexBinary">
+            <xs:length value="3" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="positiveFloat">
+        <xs:restriction base="xs:float">
+            <xs:minExclusive value="0" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="zeroOneFloat">
+        <xs:restriction base="xs:float">
+            <xs:minInclusive value="0" />
+            <xs:maxInclusive value="1" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="float2">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="([-+]?[0-9]*\.?[0-9]+)\s*,\s*([-+]?[0-9]*\.?[0-9]+)" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="positiveFloat2">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="([0-9]*\.?[0-9]+)\s*,\s*([0-9]*\.?[0-9]+)" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="alignmentType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[0-2]\s*,\s*[0-2]" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:element name="dynamic-labels">
+        <xs:complexType>
+            <xs:sequence>
+
+                <xs:element name="poi-color" maxOccurs="unbounded" minOccurs="0"
+                    type="tns:colorType">
+                    <xs:annotation>
+                        <xs:documentation>
+                            The poi color property is only used in 3D files. Each poi-color element
+                            defines a color which can be used when grouping labels as a point of
+                            interest in HTML hex format(RRGGBB). The order determines the index of a
+                            color.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="poi-icon" maxOccurs="1" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>
+                            The poi-icon property is only used in 3D files. A single poi-icon
+                            element can be defined to use when groups of labels are collapsed into a
+                            point of interest.
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:attribute name="size" type="tns:positiveFloat2" use="required">
+                            <xs:annotation>
+                                <xs:documentation>
+                                    The size property defines the dimensions used to display the
+                                    point of interest icon in pixels. The source image will be
+                                    mapped to the new size if necessary.
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="image" type="xs:base64Binary" use="required">
+                            <xs:annotation>
+                                <xs:documentation>
+                                    The image property specifies the PNG or JPEG image data for the
+                                    poi-icon image in base64 format.
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="dynamic-label" maxOccurs="unbounded" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>
+                            The dynamic-label element defines specifies an entry for a dynamic label
+                            add to the scene.
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+
+                        <xs:attribute name="id" type="xs:string" use="optional">
+                            <xs:annotation>
+                                <xs:documentation>
+                                    For CGM files the id property specifies the id of a hotspot to
+                                    attach the dynamic label.
+                                    For 3D files the id property is not available and any value
+                                    entered functions as a name.
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="name" type="xs:string" use="optional">
+                            <xs:annotation>
+                                <xs:documentation>
+                                    For CGM files the name property specifies the name of a hotspot
+                                    to attach the dynamic label.
+                                    For 3D files the name specifies a node name. If the name matches
+                                    multiple nodes, an instance of the label will be added to each
+                                    matching node.
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+
+                        <xs:attribute name="image" type="xs:base64Binary" use="optional">
+                            <xs:annotation>
+                                <xs:documentation>
+                                    The image property specifies the PNG or JPEG image data for the
+                                    dynamic label's image in base64 format.
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="text" type="xs:string" use="optional">
+                            <xs:annotation>
+                                <xs:documentation>
+                                    The text property specifies the text of the dynamic label.
+                                    Formatting of text is supported using embedded CSS/XML
+                                    Hexadecimal Numerical Character References.
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="font" type="xs:string" use="optional">
+                            <xs:annotation>
+                                <xs:documentation>
+                                    The font property specifies the font used for dynamic label
+                                    text.
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="font-size" type="tns:positiveFloat" use="optional">
+                            <xs:annotation>
+                                <xs:documentation>
+                                    The fontSize property specifies the size of the font used for
+                                    dynamic label text.
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="text-color" type="tns:colorType" use="optional">
+                            <xs:annotation>
+                                <xs:documentation>
+                                    The textColor property specifies the color of the text in HTML
+                                    hex format(RRGGBB). Default is FFFFFF.
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="bg-color" type="tns:colorType" use="optional">
+                            <xs:annotation>
+                                <xs:documentation>
+                                    The bg-color property specifies the background color of the
+                                    dynamic label in HTML hex format(RRGGBB). Default is 000000.
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="frame-color" type="tns:colorType" use="optional">
+                            <xs:annotation>
+                                <xs:documentation>
+                                    The frame-color property specifies the color of the dynamic
+                                    label's border. in HTML hex format(RRGGBB). If this parameter is
+                                    not specified, then dynamic label doesnt have a border. Default
+                                    is undefined (no border).
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="opacity" type="tns:zeroOneFloat" use="optional">
+                            <xs:annotation>
+                                <xs:documentation>
+                                    The opacity property specifies the opacity level for the dynamic
+                                    label's background or image (in range [0.0 - 1.0]). 0.0 is
+                                    completely transparent and 1.0 is fully opaque. Default is 0.5
+                                    if dynamic label doesn’t have an image, 1.0 if it has an image
+                                    specified.
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="size" type="tns:positiveFloat2" use="optional">
+                            <xs:annotation>
+                                <xs:documentation>
+                                    For CGM files the size property specifies the scale factor of
+                                    the dynamic label. Default is 1,1 which size the label to the
+                                    bounding box of the hotspot.
+                                    For 3D files the size property specifies a height and width for
+                                    the dynamic label in centimeters. Default is 4,3.
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="position" type="tns:float2" use="optional">
+                            <xs:annotation>
+                                <xs:documentation>
+                                    For 2D files the position property specifies the offset of the
+                                    dynamic label where a value of 1 corresponds to the height and
+                                    width of the bounding box of the hotspot. Default is 0,0.
+                                    For 3D files the position property specifies an offset where a
+                                    value of 1 corresponds to diameter of the bounding sphere for a
+                                    node. Default is 0,0.
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="pivot-point" type="tns:float2" use="optional">
+                            <xs:annotation>
+                                <xs:documentation>
+                                    The pivot-point property specifies which point within the
+                                    dynamic label is anchored at its position. Default is 0.5,0.5,
+                                    which corresponds to the center of the dynamic label. 0,0 is top
+                                    left corner and 1,1 is bottom right corner.
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="margin" type="tns:positiveFloat2" use="optional">
+                            <xs:annotation>
+                                <xs:documentation>
+                                    The margin property specifies the padding for the text in
+                                    pixels. Default is 0,0.
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="alignment" type="tns:alignmentType" use="optional">
+                            <xs:annotation>
+                                <xs:documentation>
+                                    The alignment property specifies the horizontal and vertical
+                                    alignment of the text. 0 – left/top, 1 – center, 2 –
+                                    right/bottom. Default is 0,0.
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="poi-color" type="xs:nonNegativeInteger" use="optional">
+                            <xs:annotation>
+                                <xs:documentation>
+                                    The poi color proerrty is only used in 3D files. The poi-color
+                                    property specifies an index into the array of POI colors. When
+                                    multiple colors are indexed within a point of interest, the
+                                    highest index color is used.
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+
+                    </xs:complexType>
+                </xs:element>
+
+            </xs:sequence>
+            <xs:attribute name="label-crop" type="xs:boolean" use="optional">
+                <xs:annotation>
+                    <xs:documentation>
+                        The label-crop property is only used in 3D files. The label-crop property
+                        specifies if cropping of labels is enabled. Default is TRUE.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

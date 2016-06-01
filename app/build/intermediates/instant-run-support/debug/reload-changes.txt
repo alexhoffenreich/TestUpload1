@@ -1,3 +1,7 @@
-CHANGED,C:\Users\ADSL\AndroidStudioProjects\TestGithub 1\app\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\example\Example2\ContextFactory$override.class
-CHANGED,C:\Users\ADSL\AndroidStudioProjects\TestGithub 1\app\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\example\Example2\CustomRenderer$override.class
-CHANGED,C:\Users\ADSL\AndroidStudioProjects\TestGithub 1\app\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\android\tools\fd\runtime\AppPatchesLoaderImpl.class
+CHANGED,C:\Users\ADSL\AndroidStudioProjects\TestUpload1\app\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\android\tools\fd\runtime\AppPatchesLoaderImpl.class
+CHANGED,C:\Users\ADSL\AndroidStudioProjects\TestUpload1\app\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\example\Example2\MainActivity$3$override.class
+CHANGED,C:\Users\ADSL\AndroidStudioProjects\TestUpload1\app\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\example\Example2\MainActivity$2$override.class
+CHANGED,C:\Users\ADSL\AndroidStudioProjects\TestUpload1\app\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\example\Example2\MainActivity$1$override.class
+CHANGED,C:\Users\ADSL\AndroidStudioProjects\TestUpload1\app\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\example\Example2\MainActivity$override.class
+CHANGED,C:\Users\ADSL\AndroidStudioProjects\TestUpload1\app\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\DVL\DVL$override.class
+CHANGED,C:\Users\ADSL\AndroidStudioProjects\TestUpload1\app\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\DVL\DVL$1$override.class

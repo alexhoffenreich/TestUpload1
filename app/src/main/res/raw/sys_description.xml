@@ -1,0 +1,172 @@
+<main>
+    <module id="trolley">
+        <name>Trolley</name>
+        <model_ref>
+            <query><![CDATA[
+            everything()
+            hide()
+            exact_match($name,"Trailer_Assy")
+            show()
+            view_to_visible()
+            ]]></query>
+        </model_ref>
+        <location></location>
+        <purposes>
+            <purpose>Facilitates movment of the Launcher</purpose>
+            <purpose>Houses various weapon system components</purpose>
+            <purpose>Provides a stable, level base during firing</purpose>
+            <purpose>Enables transportation of the Launcher by land (towed by vehicles), sea and air
+                (ISO container or helicopter)
+            </purpose>
+        </purposes>
+        <sub-modules>
+            <module-ref ref="trolley-mechanics" />
+            <module-ref ref="trolley-turntable" />
+            <module-ref ref="trolley-electronics" />
+        </sub-modules>
+    </module>
+    <module id="trolley-mechanics">
+        <purposes>
+            <purpose>Support the weight of the RFRL</purpose>
+            <purpose>Enable movement and deployment</purpose>
+            <purpose>Provides a stable platform on which to mount the launcher</purpose>
+        </purposes>
+        <location>Connected to the trolley platform</location>
+        <sub-modules>
+            <module id="towing_drawbar">
+                <name>Towing drawbar</name>
+                <model_ref>
+                    <query><![CDATA[
+                    everything()
+                    show()
+                    exact_match($name,"Towing Drawbar")
+                    show()
+                    view_to_visible()
+                    ]]>
+                    </query>
+                </model_ref>
+                <purposes>
+                    <purpose>Connects the trolley to a towing vehicle during transportation
+                    </purpose>
+                    <purpose>Adaptable to different towing vehicles by adjusting towing hitch
+                        height.
+                    </purpose>
+                </purposes>
+                <location>Lower front part of the trolley</location>
+                <sub-modules>
+                    <module id="towing_drawbar/towing_ring">
+                        <name>Towing ring</name>
+                        <location>Connected to the motion brake piston</location>
+                        <purposes>
+                            <purpose>Connects between the towing vehicle and the trolley</purpose>
+                        </purposes>
+                    </module>
+                    <module id="towing_drawbar/rubber">
+                        <name>Rubber protection</name>
+                        <purposes>
+                            <purpose>protects the Motion Brake Piston from dust and rain</purpose>
+                        </purposes>
+                    </module>
+                    <module id="towing_drawbar/piston">
+                        <name>Motion Brake Piston</name>
+                        <purposes>
+                            <purpose>Damps the trolley movement while towing vehicle in
+                                accelerations or stops
+                            </purpose>
+                            <purpose>Activates the trolley brakes while emergency stop</purpose>
+                        </purposes>
+
+                    </module>
+                    <module id="towing_drawbar/brake_pivot">
+                        <name>Brake Pivot</name>
+                        <purposes>
+                            <purpose>Pulls the brake cable when the manual brake is set to locked
+                                position
+                            </purpose>
+                            <purpose>Pulls the brake cable when the motion brake piston is pressed
+                            </purpose>
+                        </purposes>
+                    </module>
+                    <module id="towing_drawbar/handle">
+                        <name>Handle</name>
+                        <purposes>
+                            <purpose>Pull and adjust the height of the drawbar to the vehicle
+                            </purpose>
+                        </purposes>
+                    </module>
+                    <module id="towing_drawbar/handbrake_handle">
+                        <name>Handbrake handle</name>
+                        <purposes>
+                            <purpose>Sets the state of the handbrake mechanism</purpose>
+                        </purposes>
+                    </module>
+                    <module id="towing_drawbar/handbrake_piston">
+                        <name>Handbrake piston</name>
+                        <purposes>
+                            <purpose>presses against the handbrake handle and maintains it in locked
+                                or released position
+                            </purpose>
+                            <purpose>Prevents unintentional movement of the handle</purpose>
+                        </purposes>
+                    </module>
+                    <module>
+                        <name>Safety chains</name>
+                        <purposes>
+                            <purpose>Secures the trolley to the towing vehicle to prevent the
+                                trolley hitting the vehicle while turning
+                            </purpose>
+                        </purposes>
+                    </module>
+                    <module>
+                        <name>Emergency Brake Cable</name>
+                        <purposes>
+                            <purpose>Pulls the hand brake handle if the towing ring (in the trolley)
+                                detaches from the towing hook (in the vehicle) and the safety chains
+                                fail
+                            </purpose>
+                        </purposes>
+                    </module>
+                    <module id="towing_drawbar/trolley_mount">
+                        <name>Trolley mount</name>
+                        <purposes>
+                            <purpose>Connects the towing drawbar to the trolley platform and the
+                                axle assembly
+                            </purpose>
+                        </purposes>
+                    </module>
+                    <module id="towing_drawbar/towing_arm">
+                        <name>Towing arm</name>
+                        <purposes>
+                            <purpose>connects the main section to the trolley mount, enables towing
+                                the height and angle of the main section according to the position
+                                of the towing hook in the vehicle
+                            </purpose>
+                        </purposes>
+                    </module>
+                    <module qty="2">
+                        <name>Towing arm hinges</name>
+                        <purposes>
+                            <purpose>two radial hinges that enable movement of the towing arm and
+                                locks its position. When tightened, the hinges are locked by the
+                                R-Pins
+                            </purpose>
+                        </purposes>
+                    </module>
+                    <module qty="2">
+                        <name>R-Pins</name>
+                        <model_ref>
+                            <nodes>
+                                <node name="towing_drawbar/towing_arm_hinge_1" />
+                                <node name="towing_drawbar/towing_arm_hinge_2" />
+                            </nodes>
+                        </model_ref>
+                        <purposes>
+                            <purpose>Lock the towing arms at the selected position</purpose>
+                        </purposes>
+                    </module>
+                </sub-modules>
+            </module>
+
+        </sub-modules>
+    </module>
+</main>
